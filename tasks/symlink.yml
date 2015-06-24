@@ -1,0 +1,9 @@
+---
+# Symlinks shared paths
+- name: DFG | Create softlinks for shared paths
+  file: state=link path={{ dfg_release_path.stdout }}/{{ item }} src={{ dfg_deploy_to }}/shared/{{ item }}
+  with_items: dfg_shared_paths
+
+# Performs symlink exchange
+- name: DFG | Change softlink to new release
+  file: state=link path={{ dfg_deploy_to }}/{{ dfg_current_dir }} src={{ dfg_release_path }}

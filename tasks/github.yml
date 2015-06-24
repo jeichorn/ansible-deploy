@@ -1,0 +1,14 @@
+- name: DFG | GITHUB | Latest release from api
+  local_action: uri url="https://api.github.com/repos/{{ dfg_github_repo }}/releases/latest" HEADER_Authorization="token {{ dfg_github_token }}"
+  register: dfg_github_info
+  run_once: true
+  sudo: no
+
+- name: DFG | GITHUB | Set version from github
+  set_fact: dfg_release_version="{{ dfg_github_info.json.tag_name }}"
+
+- name: DFG | GITHUB | Set deploy url
+  set_fact: dfg_deploy_from="{{ dfg_github_info.json.tarball_url }}?access_token={{ dfg_github_token }}"
+
+- name: DFG | GITHUB | Set local deploy dir
+  set_fact: dfg_build_to="{{ dfg_build_root }}/{{ dfg_github_repo }}/{{ dfg_release_version }}"

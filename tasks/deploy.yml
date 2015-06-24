@@ -1,0 +1,10 @@
+---
+- name: DFG | Get release path
+  command: echo "{{ dfg_deploy_to }}/{{ dfg_version_dir }}/{{ dfg_release_version }}/"
+  register: dfg_release_path
+
+- name: DFG | RSYNC | Rsync from local build to remote
+  synchronize: src={{ dfg_deploy_from }} dest="{{ dfg_deply_to }}.rsync_target" recursive=yes delete=yes archive=yes compress=yes rsync_opts={{ dfg_rsync_extra_params }}
+
+- name: DFG | RSYNC | Copy from rsync target to release
+  command: "cp -pr {{ dfg_deply_to }}.rsync_target {{ dfg_release_path }}"

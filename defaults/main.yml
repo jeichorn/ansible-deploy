@@ -1,0 +1,24 @@
+---
+# Local path to build release
+dfg_build_root: "/tmp/dfg_build/"
+
+# Local tmp path for tarball downloads
+dfg_download_tmp: "/tmp/dfg_tmp"
+
+#Number of releases to keep in your hosts, if 0, unlimited releases will be kept
+dfg_keep_releases: 0
+
+# Folder name for the releases
+dfg_version_dir: "releases"
+
+# Softlink name for the current release
+dfg_current_dir: "current"
+
+# Shared paths to symlink to release dir
+dfg_shared_paths: []
+
+# Extra rsync config
+dfg_rsync_extra_params: ""
+
+# Strip dirs from the tarball
+dfg_strip_dirs: 1

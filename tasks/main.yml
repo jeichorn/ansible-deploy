@@ -1,0 +1,13 @@
+---
+- include: githubmeta.yml
+
+- include: download.yml
+
+- name: dfg | Execute "Build" Tasks
+  include: "{{ dfg_build_hook | default('empty.yml') }}"
+
+- include: deploy.yml
+
+- include: symlink.yml
+
+- include: cleanup.yml

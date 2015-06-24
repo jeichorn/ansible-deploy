@@ -1,0 +1,18 @@
+---
+- name: DFG | Download | Create local tmp dir
+  file: state=directory recurse=yes path={{ dfg_download_tmp }}
+
+- name: DFG | Download | Create local build dir
+  file: state=directory recurse=yes path={{ dfg_build_to }}
+  
+# http basic auth is unhappy with get_url, not sure why
+- name: DFG | Download | Download archive
+  command: "curl --location -s -o {{ dfg_download_tmp }}/dfg-{{ dfg_deploy_from | basename }}  {{ dfg_deploy_from }}"
+  args:
+    creates: "{{ dfg_download_tmp }}/dfg-{{ dfg_deploy_from | basename }}"
+  delegate_to: 127.0.0.1
+  run_once: true
+  sudo: no
+
+- name: DFG | Download | Extract archive
+  command: "tar xvf --strip-components={{ dfg_strip_dirs }} {{ dfg_download_tmp }}/dfg-{{ dfg_deploy_from | basename }} {{ dfg_build_to }}"
