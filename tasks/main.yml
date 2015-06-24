@@ -1,6 +1,8 @@
 ---
 - include: github.yml
 
+- include: setup.yml
+
 - include: download.yml
 
 - name: dfg | Execute "Build" Tasks

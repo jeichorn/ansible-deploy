@@ -2,9 +2,6 @@
 - name: DFG | Get release path
   set_fact: dfg_release_path="{{ dfg_deploy_to }}/{{ dfg_version_dir }}/{{ dfg_release_version }}"
 
-- name: DFG | Create release path
-  file: state=directory recurse=yes path="{{ dfg_release_path }}"
-
 - name: DFG | Get rsync path
   set_fact: dfg_rsync_path="{{ dfg_deploy_to }}/.rsync_target"
 
@@ -12,7 +9,7 @@
   file: state=directory recurse=yes path="{{ dfg_rsync_path }}"
 
 - name: DFG | RSYNC | Rsync from local build to remote
-  synchronize: src="{{ dfg_build_to }}" dest="{{ dfg_rsync_path }}" recursive=yes delete=yes archive=yes compress=yes links=yes rsync_opts={{ dfg_rsync_extra_params }}
+  synchronize: src="{{ dfg_build_to }}/." dest="{{ dfg_rsync_path }}" recursive=yes delete=yes archive=yes compress=yes links=yes rsync_opts={{ dfg_rsync_extra_params }}
 
 - name: DFG | RSYNC | Copy from rsync target to release
-  command: "cp -pr {{ dfg_rsync_path}} {{ dfg_release_path }}"
+  shell: "cp -pr {{ dfg_rsync_path}}/* {{ dfg_release_path }}"
