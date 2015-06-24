@@ -1,5 +1,5 @@
 ---
 # Clean up releases
-- name: DFG | Clean up releases
-  shell: ls -1dt {{ dfg_releases_path.stdout }}/* | tail -n +$(({{ dfg_keep_releases }} + 1)) | xargs rm -rf
+- name: DFG | Prune old releases
+  shell: ls -1dt "{{ dfg_deploy_to }}/{{ dfg_version_dir }}" | tail -n +$(({{ dfg_keep_releases }} + 1)) | xargs rm -rf
   when: dfg_keep_releases > 0

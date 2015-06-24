@@ -1,5 +1,5 @@
 ---
-- include: githubmeta.yml
+- include: github.yml
 
 - include: download.yml
 
@@ -10,4 +10,4 @@
 
 - include: symlink.yml
 
-- include: cleanup.yml
+- include: prune.yml
