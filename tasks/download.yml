@@ -15,7 +15,7 @@
 - name: DFG | Download | Download archive
   get_url:
     url: "{{ dfg_deploy_from }}"
-    dest: "{{ dfg_download_tmp }}/dfg-{{ dfg_release_version }}.tar.gz"
+    dest: "{{ dfg_download_tmp }}/{{ dfg_github_repo | replace('/','-') }}-{{ dfg_release_version }}.tar.gz"
   delegate_to: 127.0.0.1
   run_once: true
   sudo: no
@@ -27,7 +27,7 @@
   sudo: no
 
 - name: DFG | Download | Extract archive
-  command: "tar xzf {{ dfg_download_tmp }}/dfg-{{ dfg_release_version }}.tar.gz --strip-components={{ dfg_strip_dirs }} -C {{ dfg_build_to }}"
+  command: "tar xzf {{ dfg_download_tmp }}/{{ dfg_github_repo |  replace('/','-') }}-{{ dfg_release_version }}.tar.gz --strip-components={{ dfg_strip_dirs }} -C {{ dfg_build_to }}"
   delegate_to: 127.0.0.1
   run_once: true
   sudo: no
