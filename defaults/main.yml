@@ -22,3 +22,6 @@ dfg_rsync_extra_params: ""
 
 # Strip dirs from the tarball
 dfg_strip_dirs: 1
+
+# Set to true to skip checking that the version is already on the destination
+dfg_force_deploy: false

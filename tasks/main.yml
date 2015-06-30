@@ -3,6 +3,8 @@
 
 - include: setup.yml
 
+- include: check.yml
+
 - include: download.yml
 
 - name: dfg | Execute "Build" Tasks
