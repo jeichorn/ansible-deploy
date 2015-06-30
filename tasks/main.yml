@@ -6,12 +6,17 @@
 - include: check.yml
 
 - include: download.yml
+  when: dfg_deploy_needed == true
 
 - name: dfg | Execute "Build" Tasks
   include: "{{ dfg_build_hook | default('empty.yml') }}"
+  when: dfg_deploy_needed == true
 
 - include: deploy.yml
+  when: dfg_deploy_needed == true
 
 - include: symlink.yml
+  when: dfg_deploy_needed == true
 
 - include: prune.yml
+  when: dfg_deploy_needed == true

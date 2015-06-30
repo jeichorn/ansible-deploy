@@ -2,8 +2,7 @@
 - name: Check if release exists at destination
   stat: path="{{ dfg_release_path }}"
   register: dfg_release_path_stat
-  when: ! dfg_force_deploy
+  when: dfg_force_deploy != true
 
 - name: Deploy is needed
-  set_fact: dfg_deploy_needed={{ def_release_path_stat.stat.isdir is defined && def_release_path_stat.stat.isdir) || dfg_force_deploy}}
-  
+  set_fact: dfg_deploy_needed={{ dfg_release_path_stat is not defined or dfg_release_path_stat.stat.exists == false or dfg_force_deploy == true }}

@@ -14,5 +14,4 @@
   set_fact: dfg_build_to="{{ dfg_build_root }}/{{ dfg_github_repo }}"
 
 - name: DFG | Get release path
-  command: echo "{{ dfg_deploy_to }}/{{ dfg_version_dir }}/{{ dfg_release_version }}/"
-  register: dfg_release_path
+  set_fact: dfg_release_path="{{ dfg_deploy_to }}/{{ dfg_version_dir }}/{{ dfg_release_version }}/"
