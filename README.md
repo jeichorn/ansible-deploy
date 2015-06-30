@@ -12,7 +12,7 @@ Flow
   * Download newest release tarball
   * Extract tarball to local build
   * Run build hooks
-* If release versio doesn't exist at dfg_deploy_to
+* If release version doesn't exist at dfg_deploy_to
   * Setup deploy dir
   * Rsync code from local to remote temp (this speeds up rsync)
   * Copy from remote temp to release
