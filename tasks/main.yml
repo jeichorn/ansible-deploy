@@ -18,5 +18,9 @@
 - include: symlink.yml
   when: dfg_deploy_needed == true
 
+- name: dfg | Execute "AFTER" Tasks
+  include: "{{ dfg_after_hook | default('empty.yml') }}"
+  when: dfg_deploy_needed == true
+
 - include: prune.yml
   when: dfg_deploy_needed == true
