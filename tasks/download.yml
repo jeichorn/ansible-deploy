@@ -31,3 +31,9 @@
   delegate_to: 127.0.0.1
   run_once: true
   sudo: no
+
+- name: DFG | Download | Create .release file
+  template:  src=release.j2 dest={{ dfg_build_to }}/.release
+  delegate_to: 127.0.0.1
+  run_once: true
+  sudo: no

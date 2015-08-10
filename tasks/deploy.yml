@@ -12,4 +12,4 @@
   synchronize: src="{{ dfg_build_to }}/." dest="{{ dfg_rsync_path }}" recursive=yes delete=yes archive=yes compress=yes links=yes rsync_opts={{ dfg_rsync_extra_params }}
 
 - name: DFG | RSYNC | Copy from rsync target to release
-  shell: "cp -pr {{ dfg_rsync_path}}/* {{ dfg_release_path }}"
+  shell: "cp -pr {{ dfg_rsync_path}}/. {{ dfg_release_path }}"
