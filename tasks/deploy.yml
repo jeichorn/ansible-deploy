@@ -1,15 +1,17 @@
 ---
-- name: DFG | Create release dir
-  file: state=directory recurse=yes path="{{ dfg_release_path }}"
+- name: DFG | DEPLOY | Create release dir
+  file: state=directory recurse=yes path="{{ dfg_release_path }}" owner="{{ dfg_deploy_user }}" group="{{ dfg_deploy_user }}"
 
-- name: DFG | Get rsync path
+- name: DFG | DEPLOY | Get rsync path
   set_fact: dfg_rsync_path="{{ dfg_deploy_to }}/.rsync_target"
 
 - name: DFG | Create rsync path
   file: state=directory recurse=yes path="{{ dfg_rsync_path }}"
 
-- name: DFG | RSYNC | Rsync from local build to remote
+- name: DFG | DEPLOY | Rsync from local build to remote
   synchronize: src="{{ dfg_build_to }}/." dest="{{ dfg_rsync_path }}" recursive=yes delete=yes archive=yes compress=yes links=yes rsync_opts={{ dfg_rsync_extra_params }}
 
-- name: DFG | RSYNC | Copy from rsync target to release
+- name: DFG | DEPLOY | Copy from rsync target to release
   shell: "cp -pr {{ dfg_rsync_path}}/. {{ dfg_release_path }}"
+  sudo: true
+  sudo_user: "{{ dfg_deploy_user }}"

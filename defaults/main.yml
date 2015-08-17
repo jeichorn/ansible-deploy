@@ -20,6 +20,9 @@ dfg_shared_paths: []
 # Extra rsync config
 dfg_rsync_extra_params: ""
 
+#deploy code using this user
+dfg_deploy_user: "root"
+
 # Strip dirs from the tarball
 dfg_strip_dirs: 1
 
