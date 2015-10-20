@@ -1,0 +1,23 @@
+- name: DFG | GITHUB | Latest version from branch
+  local_action: uri url="https://api.github.com/repos/{{ dfg_github_repo }}/branches/{{ dfg_github_branch }}" HEADER_Authorization="token {{ dfg_github_token }}"
+  register: dfg_github_info
+  run_once: true
+  sudo: no
+
+- name: DFG | GITHUB | Set version from github
+  set_fact: dfg_release_version="{{ dfg_github_info.json.commit.sha }}"
+
+- name: DFG | GITHUB | Get Repo Info
+  local_action: uri url="https://api.github.com/repos/{{ dfg_github_repo }}" HEADER_Authorization="token {{ dfg_github_token }}"
+  register: dfg_github_info
+  run_once: true
+  sudo: no
+
+- name: DFG | GITHUB | Set deploy url
+  set_fact: dfg_deploy_from="{{ dfg_github_info.json.clone_url | replace('https://', 'https://{{ dfg_github_user }}:{{ dfg_github_token }}@') }}"
+
+- name: DFG | GITHUB | Set local deploy dir
+  set_fact: dfg_build_to="{{ dfg_build_root }}/{{ dfg_github_repo }}"
+
+- name: DFG | Get release path
+  set_fact: dfg_release_path="{{ dfg_deploy_to }}/{{ dfg_version_dir }}/{{ dfg_release_version }}/"

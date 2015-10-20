@@ -1,12 +1,19 @@
 ---
-- include: github.yml
+- include: github-release.yml
+  when: dfg_github_type == "release"
+
+- include: github-branch.yml
+  when: dfg_github_type != "release"
 
 - include: setup.yml
 
 - include: check.yml
 
 - include: download.yml
-  when: dfg_deploy_needed == true
+  when: dfg_deploy_needed == true and dfg_github_type == "release"
+
+- include: git.yml
+  when: dfg_deploy_needed == true and dfg_github_type != "release"
 
 - name: dfg | Execute "Build" Tasks
   include: "{{ dfg_build_hook | default('empty.yml') }}"

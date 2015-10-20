@@ -28,3 +28,8 @@ dfg_strip_dirs: 1
 
 # Set to true to skip checking that the version is already on the destination
 dfg_force_deploy: false
+
+# deploy from github release, or from a branch
+dfg_github_type: "release"
+dfg_github_user: "unspecified"
+dfg_github_branch: "unspecified"
