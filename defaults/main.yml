@@ -6,7 +6,7 @@ dfg_build_root: "/tmp/dfg_build/"
 dfg_download_tmp: "/tmp/dfg_tmp"
 
 #Number of releases to keep in your hosts, if 0, unlimited releases will be kept
-dfg_keep_releases: 0
+dfg_keep_releases: 3
 
 # Folder name for the releases
 dfg_version_dir: "releases"
