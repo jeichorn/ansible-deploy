@@ -4,5 +4,31 @@
   register: dfg_release_path_stat
   when: dfg_force_deploy != true
 
+- name: Check if current symlink is correct
+  stat: path="{{ dfg_deploy_to }}/{{ dfg_current_dir }}"
+  register: dfg_current_stat
+  when: dfg_force_deploy != true
+
 - name: Deploy is needed
-  set_fact: dfg_deploy_needed={{ dfg_release_path_stat is not defined or dfg_release_path_stat.stat.exists == false or dfg_force_deploy == true }}
+  set_fact: dfg_deploy_needed={{ dfg_release_path_stat is not defined or dfg_release_path_stat.stat.exists == false or dfg_current_stat is not defined or dfg_current_stat.stat.exists == false or dfg_current_stat.stat.lnk_source != dfg_release_path or dfg_force_deploy == true }}
+
+- name: Check if we have a build
+  stat: path="{{ dfg_build_to }}/.release"
+  register: dfg_release_stat
+  delegate_to: 127.0.0.1
+  run_once: true
+  sudo: no
+
+- name: Get the build version
+  command: cat "{{ dfg_build_to }}/.release"
+  register: dfg_file_build_version
+  when: dfg_release_stat.stat.exists
+  delegate_to: 127.0.0.1
+  run_once: true
+  sudo: no
+
+- name: Build is needed
+  set_fact: dfg_build_needed={{ dfg_release_stat.stat.exists and dfg_file_build_version.stdout != dfg_release_version }}
+  delegate_to: 127.0.0.1
+  run_once: true
+  sudo: no
