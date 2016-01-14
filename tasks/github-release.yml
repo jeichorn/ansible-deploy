@@ -10,8 +10,3 @@
 - name: DFG | GITHUB | Set deploy url
   set_fact: dfg_deploy_from="{{ dfg_github_info.json.tarball_url }}?access_token={{ dfg_github_token }}"
 
-- name: DFG | GITHUB | Set local deploy dir
-  set_fact: dfg_build_to="{{ dfg_build_root }}/{{ dfg_github_repo }}"
-
-- name: DFG | Get release path
-  set_fact: dfg_release_path="{{ dfg_deploy_to }}/{{ dfg_version_dir }}/{{ dfg_release_version }}/"

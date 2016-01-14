@@ -5,19 +5,29 @@
 - include: github-branch.yml
   when: dfg_github_type != "release"
 
-- include: setup.yml
+- include: github-shared.yml
 
 - include: check.yml
 
+- include: setup.yml
+
 - include: download.yml
-  when: dfg_deploy_needed == true and dfg_github_type == "release"
+  when: dfg_deploy_needed == true and dfg_github_type == "release" and dfg_build_needed == true
 
 - include: git.yml
-  when: dfg_deploy_needed == true and dfg_github_type != "release"
+  when: dfg_deploy_needed == true and dfg_github_type != "release" and dfg_build_needed == true
 
 - name: dfg | Execute "Build" Tasks
   include: "{{ dfg_build_hook | default('empty.yml') }}"
-  when: dfg_deploy_needed == true
+  when: dfg_deploy_needed == true and dfg_build_needed == true
+
+# creating the release here so that it won't be created if the hooked tasks fail
+- name: DFG | Build | Create .release file
+  template:  src=release.j2 dest={{ dfg_build_to }}/.release
+  when: dfg_deploy_needed == true and dfg_build_needed == true
+  delegate_to: 127.0.0.1
+  run_once: true
+  sudo: no
 
 - include: deploy.yml
   when: dfg_deploy_needed == true

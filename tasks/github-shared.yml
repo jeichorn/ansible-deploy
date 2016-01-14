@@ -1,0 +1,6 @@
+
+- name: DFG | GITHUB | Set local build dir
+  set_fact: dfg_build_to="{{ dfg_build_root }}/{{ansible_user_id}}/{{ dfg_github_repo }}"
+
+- name: DFG | Get release path
+  set_fact: dfg_release_path="{{ dfg_deploy_to }}/{{ dfg_version_dir }}/{{ dfg_release_version }}"
